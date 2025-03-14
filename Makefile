@@ -1,4 +1,4 @@
-.PHONY: all build clean test test-unit test-integration run help install install-local uninstall uninstall-local vendor docker-build docker-push docker-buildx buildctl-build
+.PHONY: all build clean test test-unit test-integration run help install install-local uninstall uninstall-local vendor docker-build docker-push docker-buildx buildctl-build release
 
 # 项目名称
 PROJECT_NAME := IPLocate
@@ -208,6 +208,16 @@ buildctl-build: vendor
 		--output type=image,name=$(shell echo $(PROJECT_NAME) | tr '[:upper:]' '[:lower:]'):$(VERSION),push=true
 	@echo "✅ buildctl镜像构建完成"
 
+# 发布新版本
+release:
+	@echo "发布新版本..."
+	@if [ -z "$(v)" ]; then \
+		echo "❌ 错误: 必须提供版本号"; \
+		echo "  使用方法: make release v=1.0.1"; \
+		exit 1; \
+	fi
+	@./scripts/release.sh $(v)
+
 # 显示帮助信息
 help:
 	@echo "IPLocate API 位置查询工具 - Makefile 帮助"
@@ -236,6 +246,7 @@ help:
 	@echo "  make docker-push    - 推送Docker镜像到仓库"
 	@echo "  make docker-buildx  - 使用Docker Buildx构建并推送多平台镜像"
 	@echo "  make buildctl-build - 使用buildctl构建镜像"
+	@echo "  make release v=版本号 - 发布新版本"
 	@echo "  make help           - 显示此帮助信息"
 	@echo ""
 	@echo "全局选项:"
