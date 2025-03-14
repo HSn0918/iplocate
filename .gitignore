@@ -1,0 +1,56 @@
+# 二进制文件
+/iplocate
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# 测试二进制文件
+*.test
+
+# 覆盖率工具生成的文件
+*.out
+*.prof
+*.cov
+
+# 依赖目录（如果使用vendor，可以选择注释掉）
+# /vendor/
+
+# IDE和编辑器文件
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# 日志文件
+*.log
+
+# 环境变量文件
+.env
+.env.local
+
+# 构建输出目录
+/bin/
+/dist/
+
+# 自动生成的文件
+/iplocate_completion.bash
+/iplocate_completion.zsh
+
+# 临时文件
+/tmp/
+*.tmp
+
+# 配置文件（可能包含敏感信息）
+# 如果需要包含配置文件模板，使用 .example 后缀
+*.yaml
+*.yml
+!*.example.yaml
+!*.example.yml
+
+# 其他
+.history/
+.cache/
