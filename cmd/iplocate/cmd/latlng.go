@@ -32,19 +32,21 @@ var latlngCmd = &cobra.Command{
 		// 设置调试模式
 		locationService.SetDebug(debugMode)
 
-		detailData, err := locationService.GetDetailByLatLng(lat, lng)
+		detailDatas, err := locationService.GetDetailByLatLngWithTags(lat, lng)
 		if err != nil {
 			utils.Log.Errorf("获取经纬度详细信息失败: %v", err)
 			return
 		}
 
 		utils.Log.Infof("成功获取经纬度: [%f, %f] 的位置信息", lat, lng)
-		utils.PrintLatLngDetailInfo(detailData)
-
-		// 如果指定了显示原始响应，则打印原始响应信息
-		if latlngShowRawResponse {
-			utils.PrintLatLngDetailRawResponse(detailData)
+		for _, detailData := range detailDatas {
+			utils.PrintLatLngDetailInfo(&detailData)
+			// 如果指定了显示原始响应，则打印原始响应信息
+			if latlngShowRawResponse {
+				utils.PrintLatLngDetailRawResponse(&detailData.Detail)
+			}
 		}
+
 	},
 }
 

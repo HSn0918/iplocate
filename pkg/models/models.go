@@ -58,3 +58,9 @@ type LatLngDetail struct {
 	// 保存原始响应
 	RawResponse *resty.Response `json:"-"`
 }
+
+// TaggedLatLngDetail 定义带有标签的经纬度详细位置数据结构
+type TaggedLatLngDetail struct {
+	Tag    int          `json:"tag"`
+	Detail LatLngDetail `json:"detail"`
+}

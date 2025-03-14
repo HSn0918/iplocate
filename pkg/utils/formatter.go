@@ -63,41 +63,43 @@ func PrintIPLocationInfo(data *models.IPLocationData) {
 }
 
 // PrintLatLngDetailInfo 打印经纬度详细位置信息
-func PrintLatLngDetailInfo(data *models.LatLngDetail) {
-	fmt.Println("\n🗺️ ======== 详细位置信息 ======== 🗺️")
-	fmt.Printf("🧭 经度: %.6f\n", data.Lng)
-	fmt.Printf("🧭 纬度: %.6f\n", data.Lat)
-	fmt.Printf("🏳️ 国家: %s\n", data.Country)
-	fmt.Printf("🏞️ 省份: %s\n", data.Province)
-	fmt.Printf("🏙️ 城市: %s\n", data.City)
+func PrintLatLngDetailInfo(data *models.TaggedLatLngDetail) {
+
+	fmt.Println()
+	fmt.Printf("\n🗺️ ======== [%d]详细位置信息 ======== 🗺️\n", data.Tag)
+	fmt.Printf("🧭 经度: %.6f\n", data.Detail.Lng)
+	fmt.Printf("🧭 纬度: %.6f\n", data.Detail.Lat)
+	fmt.Printf("🏳️ 国家: %s\n", data.Detail.Country)
+	fmt.Printf("🏞️ 省份: %s\n", data.Detail.Province)
+	fmt.Printf("🏙️ 城市: %s\n", data.Detail.City)
 
 	if currentOutputLevel >= OutputLevelNormal {
-		fmt.Printf("🔤 城市拼音: %s\n", data.CityPinyin)
+		fmt.Printf("🔤 城市拼音: %s\n", data.Detail.CityPinyin)
 	}
 
-	fmt.Printf("🏡 区县: %s\n", data.District)
-	fmt.Printf("📍 区域名称: %s\n", data.AreaName)
-	fmt.Printf("📝 详细地址: %s\n", data.Detail)
+	fmt.Printf("🏡 区县: %s\n", data.Detail.District)
+	fmt.Printf("📍 区域名称: %s\n", data.Detail.AreaName)
+	fmt.Printf("📝 详细地址: %s\n", data.Detail.Detail)
 
 	if currentOutputLevel >= OutputLevelVerbose {
-		fmt.Printf("🔢 区域ID: %d\n", data.Area)
-		fmt.Printf("🔢 父区域ID: %d\n", data.ParentArea)
-		fmt.Printf("🔢 地区ID: %d\n", data.Id)
-		fmt.Printf("🔢 点评城市ID: %d\n", data.DpCityId)
-		fmt.Printf("🔢 原始城市ID: %d\n", data.OriginCityID)
-		fmt.Printf("🏙️ 开放城市名称: %s\n", data.OpenCityName)
-		fmt.Printf("✅ 是否开放: %t\n", data.IsOpen)
-		fmt.Printf("🌏 是否国外: %t\n", data.IsForeign)
+		fmt.Printf("🔢 区域ID: %d\n", data.Detail.Area)
+		fmt.Printf("🔢 父区域ID: %d\n", data.Detail.ParentArea)
+		fmt.Printf("🔢 地区ID: %d\n", data.Detail.Id)
+		fmt.Printf("🔢 点评城市ID: %d\n", data.Detail.DpCityId)
+		fmt.Printf("🔢 原始城市ID: %d\n", data.Detail.OriginCityID)
+		fmt.Printf("🏙️ 开放城市名称: %s\n", data.Detail.OpenCityName)
+		fmt.Printf("✅ 是否开放: %t\n", data.Detail.IsOpen)
+		fmt.Printf("🌏 是否国外: %t\n", data.Detail.IsForeign)
 	}
 
 	// 打印完整详细地址
 	fullDetailAddress := strings.TrimSpace(fmt.Sprintf("%s %s %s %s %s %s",
-		data.Country,
-		data.Province,
-		data.City,
-		data.District,
-		data.AreaName,
-		data.Detail))
+		data.Detail.Country,
+		data.Detail.Province,
+		data.Detail.City,
+		data.Detail.District,
+		data.Detail.AreaName,
+		data.Detail.Detail))
 	fmt.Printf("\n📮 完整详细地址: %s\n", fullDetailAddress)
 }
 

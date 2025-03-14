@@ -1,9 +1,10 @@
 package cmd
 
 import (
+	"github.com/spf13/cobra"
+
 	"github.com/hsn0918/iplocate/pkg/api"
 	"github.com/hsn0918/iplocate/pkg/utils"
-	"github.com/spf13/cobra"
 )
 
 var (
@@ -47,17 +48,19 @@ var fullCmd = &cobra.Command{
 
 		// 第二步: 使用经纬度获取详细信息
 		utils.Log.Infof("步骤2: 使用经纬度 [%f, %f] 查询详细位置信息", locationData.Lat, locationData.Lng)
-		detailData, err := locationService.GetDetailByLatLng(locationData.Lat, locationData.Lng)
+
+		detailDatas, err := locationService.GetDetailByLatLngWithTags(locationData.Lat, locationData.Lng)
 		if err != nil {
 			utils.Log.Errorf("获取经纬度详细信息失败: %v", err)
 			return
 		}
 		utils.Log.Info("成功获取详细位置信息")
-		utils.PrintLatLngDetailInfo(detailData)
-
-		// 如果指定了显示原始响应，则打印原始响应信息
-		if fullShowRawResponse {
-			utils.PrintLatLngDetailRawResponse(detailData)
+		for _, detailData := range detailDatas {
+			utils.PrintLatLngDetailInfo(&detailData)
+			// 如果指定了显示原始响应，则打印原始响应信息
+			if fullShowRawResponse {
+				utils.PrintLatLngDetailRawResponse(&detailData.Detail)
+			}
 		}
 
 		utils.Log.Info("完整查询流程完成")
