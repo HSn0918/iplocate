@@ -7,7 +7,7 @@ MAIN_FILE := cmd/iplocate/main.go
 # 输出二进制文件
 BINARY_NAME := iplocate
 # 版本号
-VERSION := 1.0.0
+VERSION := 0.0.1
 # 构建日期
 BUILD_DATE := $(shell date +%Y-%m-%d)
 # Git 提交哈希
