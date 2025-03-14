@@ -180,22 +180,6 @@ go test -tags=integration ./pkg/...
 make test
 ```
 
-### Release
-
-To release a new version:
-
-```bash
-# Release a new version
-make release v=1.0.1
-```
-
-This will:
-1. Update the version number in the Makefile
-2. Commit the changes
-3. Create a tag
-4. Push to the remote repository
-5. GitHub Actions will automatically build and publish the release
-
 ## Dependencies
 
 - [github.com/spf13/cobra](https://github.com/spf13/cobra) - Command-line interface library
@@ -409,21 +393,6 @@ go test -tags=integration ./pkg/...
 make test
 ```
 
-### 发布
-
-发布新版本：
-
-```bash
-# 发布新版本
-make release v=1.0.1
-```
-
-这将：
-1. 更新 Makefile 中的版本号
-2. 提交更改
-3. 创建标签
-4. 推送到远程仓库
-5. GitHub Actions 将自动构建并发布 release
 
 ## 依赖库
 
