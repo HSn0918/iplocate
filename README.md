@@ -6,13 +6,6 @@
 
 - 通过 IP 地址查询基本位置信息
 - 通过经纬度查询详细位置信息
-- 支持完整查询流程（先 IP 查询，再经纬度查询）
-- 支持调试模式和日志记录
-- 使用 Resty 库进行高效的 HTTP 请求
-- 使用 Logrus 库进行结构化日志记录
-- 支持命令行自动补全功能
-- 支持显示原始 HTTP 响应数据
-- 提供 Makefile 简化常用操作
 
 ## 安装
 
@@ -38,68 +31,6 @@ make uninstall-local
 
 # 或者使用 Go 命令安装
 go install github.com/hsn0918/iplocate/cmd/iplocate@latest
-```
-
-## 使用方法
-
-### 使用 Makefile
-
-项目提供了 Makefile 来简化常用操作：
-
-```bash
-# 编译项目
-make build
-
-# 运行单元测试
-make test-unit
-
-# 运行集成测试
-make test-integration
-
-# 运行所有测试
-make test
-
-# 测试 IP 查询功能
-make test-ip
-
-# 测试 IP 查询功能（显示原始响应）
-make test-ip-raw
-
-# 测试经纬度查询功能
-make test-latlng
-
-# 测试经纬度查询功能（显示原始响应）
-make test-latlng-raw
-
-# 测试完整查询功能
-make test-full
-
-# 测试完整查询功能（显示原始响应）
-make test-full-raw
-
-# 生成 Bash 自动补全脚本
-make completion-bash
-
-# 生成 Zsh 自动补全脚本
-make completion-zsh
-
-# 安装到系统目录（需要管理员权限）
-sudo make install
-
-# 安装到用户本地目录（不需要管理员权限）
-make install-local
-
-# 从系统目录卸载（需要管理员权限）
-sudo make uninstall
-
-# 从用户本地目录卸载
-make uninstall-local
-
-# 清理生成的文件
-make clean
-
-# 显示帮助信息
-make help
 ```
 
 ### IP 查询
