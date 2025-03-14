@@ -100,23 +100,23 @@ The tool supports generating auto-completion scripts for Bash, Zsh, Fish, and Po
 
 ```bash
 # Generate and apply Bash auto-completion script
-source <(./iplocate completion bash)
+source <(iplocate completion bash)
 
 # Permanently add to Bash configuration
-./iplocate completion bash > ~/.bash_completion
+iplocate completion bash > ~/.bash_completion
 
 # Generate and apply Zsh auto-completion script
-source <(./iplocate completion zsh)
+source <(iplocate completion zsh)
 
 # Permanently add to Zsh configuration
-./iplocate completion zsh > "${fpath[1]}/_iplocate"
+iplocate completion zsh > "${fpath[1]}/_iplocate"
 
 # Generate Fish auto-completion script
-./iplocate completion fish > ~/.config/fish/completions/iplocate.fish
+iplocate completion fish > ~/.config/fish/completions/iplocate.fish
 
 # Generate PowerShell auto-completion script
-./iplocate completion powershell > iplocate.ps1
-. ./iplocate.ps1
+iplocate completion powershell > iplocate.ps1
+. iplocate.ps1
 ```
 
 ### Global Options
@@ -313,23 +313,23 @@ go install github.com/hsn0918/iplocate/cmd/iplocate@latest
 
 ```bash
 # 生成 Bash 自动补全脚本并应用
-source <(./iplocate completion bash)
+source <(iplocate completion bash)
 
 # 永久添加到 Bash 配置
-./iplocate completion bash > ~/.bash_completion
+iplocate completion bash > ~/.bash_completion
 
 # 生成 Zsh 自动补全脚本并应用
-source <(./iplocate completion zsh)
+source <(iplocate completion zsh)
 
 # 永久添加到 Zsh 配置
-./iplocate completion zsh > "${fpath[1]}/_iplocate"
+iplocate completion zsh > "${fpath[1]}/_iplocate"
 
 # 生成 Fish 自动补全脚本
-./iplocate completion fish > ~/.config/fish/completions/iplocate.fish
+iplocate completion fish > ~/.config/fish/completions/iplocate.fish
 
 # 生成 PowerShell 自动补全脚本
-./iplocate completion powershell > iplocate.ps1
-. ./iplocate.ps1
+iplocate completion powershell > iplocate.ps1
+. iplocate.ps1
 ```
 
 ### 全局选项

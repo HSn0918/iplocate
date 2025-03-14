@@ -96,6 +96,31 @@ completion-zsh:
 	@echo "生成 Zsh 自动补全脚本..."
 	@./$(BINARY_NAME) completion zsh > iplocate_completion.zsh
 	@echo "生成完成: iplocate_completion.zsh"
+	@echo "使用方法: source <(./$(BINARY_NAME) completion zsh)"
+	@echo "或添加到 .zshrc: source <(iplocate completion zsh)"
+
+# 显示如何使用命令行补全
+show-completion-usage:
+	@echo "Bash 自动补全使用方法:"
+	@echo "  临时使用: source <(./$(BINARY_NAME) completion bash)"
+	@echo "  永久添加: ./$(BINARY_NAME) completion bash > ~/.bash_completion"
+	@echo ""
+	@echo "Zsh 自动补全使用方法:"
+	@echo "  临时使用: source <(./$(BINARY_NAME) completion zsh)"
+	@echo "  永久添加: ./$(BINARY_NAME) completion zsh > \"\$${fpath[1]}/_iplocate\""
+	@echo ""
+	@echo "Fish 自动补全使用方法:"
+	@echo "  ./$(BINARY_NAME) completion fish > ~/.config/fish/completions/iplocate.fish"
+	@echo ""
+	@echo "PowerShell 自动补全使用方法:"
+	@echo "  ./$(BINARY_NAME) completion powershell > iplocate.ps1"
+	@echo "  . ./iplocate.ps1"
+
+# 设置命令行补全
+setup-completion:
+	@echo "设置命令行补全..."
+	@chmod +x ./scripts/setup_completion.sh
+	@./scripts/setup_completion.sh
 
 # 安装到系统（需要管理员权限）
 install: build
@@ -237,6 +262,8 @@ help:
 	@echo "  make test-full-raw  - 测试完整查询（显示原始响应）"
 	@echo "  make completion-bash - 生成 Bash 自动补全脚本"
 	@echo "  make completion-zsh  - 生成 Zsh 自动补全脚本"
+	@echo "  make show-completion-usage - 显示如何使用命令行补全"
+	@echo "  make setup-completion - 设置命令行补全（自动添加到shell配置文件）"
 	@echo "  make install        - 安装到系统 (需要管理员权限)"
 	@echo "  make install-local  - 安装到用户本地目录 (不需要管理员权限)"
 	@echo "  make uninstall      - 从系统卸载 (需要管理员权限)"
