@@ -1,4 +1,237 @@
+# IPLocate API Location Query Tool
+
+A command-line tool based on API for querying location information through IP addresses or latitude and longitude coordinates.
+
+<p align="right">
+  <a href="#iplocate-api-位置查询工具">中文</a> | <b>English</b>
+</p>
+
+## Features
+
+- Query basic location information by IP address
+- Query detailed location information by latitude and longitude coordinates
+- Support for multiple IP addresses (space-separated)
+
+## Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/hsn0918/iplocate.git
+cd iplocate
+
+# Compile using Makefile
+make build
+
+# Install to system directory (requires administrator privileges)
+sudo make install
+
+# Or install to user local directory (no administrator privileges required)
+make install-local
+
+# Uninstall (if installed in system directory, requires administrator privileges)
+sudo make uninstall
+
+# Uninstall from user local directory
+make uninstall-local
+
+# Or install using Go command
+go install github.com/hsn0918/iplocate/cmd/iplocate@latest
+```
+
+## Usage
+
+### IP Query
+
+```bash
+# Query location information for a specific IP
+./iplocate ip -a 114.114.114.114
+
+# Query multiple IP addresses
+./iplocate ip -a "114.114.114.114 8.8.8.8"
+
+# Or specify IPs directly as arguments
+./iplocate ip 114.114.114.114 8.8.8.8
+
+# Enable debug mode
+./iplocate ip -a 114.114.114.114 -d
+
+# Show raw response data
+./iplocate ip -a 114.114.114.114 -r
+
+# Output logs to a file
+./iplocate ip -a 114.114.114.114 -l ip_query.log
+```
+
+### Latitude and Longitude Query
+
+```bash
+# Query location information for specific coordinates
+./iplocate latlng -t 39.9042 -g 116.4074
+
+# Enable debug mode
+./iplocate latlng -t 39.9042 -g 116.4074 -d
+
+# Show raw response data
+./iplocate latlng -t 39.9042 -g 116.4074 -r
+```
+
+### Full Query
+
+```bash
+# First query location by IP, then query detailed information by coordinates
+./iplocate full -a 114.114.114.114
+
+# Query multiple IP addresses
+./iplocate full -a "114.114.114.114 8.8.8.8"
+
+# Or specify IPs directly as arguments
+./iplocate full 114.114.114.114 8.8.8.8
+
+# Enable debug mode
+./iplocate full -a 114.114.114.114 -d
+
+# Show raw response data
+./iplocate full -a 114.114.114.114 -r
+```
+
+### Auto-completion
+
+The tool supports generating auto-completion scripts for Bash, Zsh, Fish, and PowerShell:
+
+```bash
+# Generate and apply Bash auto-completion script
+source <(./iplocate completion bash)
+
+# Permanently add to Bash configuration
+./iplocate completion bash > ~/.bash_completion
+
+# Generate and apply Zsh auto-completion script
+source <(./iplocate completion zsh)
+
+# Permanently add to Zsh configuration
+./iplocate completion zsh > "${fpath[1]}/_iplocate"
+
+# Generate Fish auto-completion script
+./iplocate completion fish > ~/.config/fish/completions/iplocate.fish
+
+# Generate PowerShell auto-completion script
+./iplocate completion powershell > iplocate.ps1
+. ./iplocate.ps1
+```
+
+### Global Options
+
+```
+-d, --debug          Enable debug mode
+-l, --log string     Log file path (default output to console)
+-o, --output-level   Output level (0=basic, 1=normal, 2=detailed, default is 0)
+-c, --config string  Configuration file path (default is $HOME/.iplocate.yaml)
+-h, --help           View help information
+```
+
+### Command-specific Options
+
+```
+ip:
+  -a, --addr string   IP address to query (required)
+  -r, --raw           Show raw response information
+
+latlng:
+  -t, --lat float     Latitude value (required)
+  -g, --lng float     Longitude value (required)
+  -r, --raw           Show raw response information
+
+full:
+  -a, --addr string   IP address to query (required)
+  -r, --raw           Show raw response information
+```
+
+## Development
+
+### Project Structure
+
+```
+iplocate/
+├── cmd/                # Command-line application
+│   └── iplocate/       # Main program
+│       ├── cmd/        # Command definitions
+│       └── main.go     # Program entry
+├── pkg/                # Package directory
+│   ├── api/            # API services
+│   ├── models/         # Data models
+│   └── utils/          # Utility functions
+├── scripts/            # Script files
+├── go.mod              # Go module definition
+├── go.sum              # Go module checksums
+├── Makefile            # Build scripts
+└── README.md           # Project description
+```
+
+### Testing
+
+```bash
+# Run unit tests
+go test ./pkg/...
+
+# Run integration tests
+go test -tags=integration ./pkg/...
+
+# Or use Makefile
+make test
+```
+
+### Release
+
+To release a new version:
+
+```bash
+# Release a new version
+make release v=1.0.1
+```
+
+This will:
+1. Update the version number in the Makefile
+2. Commit the changes
+3. Create a tag
+4. Push to the remote repository
+5. GitHub Actions will automatically build and publish the release
+
+## Dependencies
+
+- [github.com/spf13/cobra](https://github.com/spf13/cobra) - Command-line interface library
+- [github.com/go-resty/resty](https://github.com/go-resty/resty) - Simple HTTP and REST client library
+- [github.com/sirupsen/logrus](https://github.com/sirupsen/logrus) - Structured logging library
+
+## Disclaimer and Usage Restrictions
+
+### Disclaimer
+
+This tool is for learning and research purposes only. The developer is not responsible for any consequences arising from the use of this tool. By using this tool, you agree to assume all risks of use.
+
+### Usage Restrictions
+
+1. **No Abuse**: It is strictly prohibited to use this tool for any illegal activities or actions that infringe on the rights of others.
+2. **API Usage Restrictions**: Please comply with the terms of use and restrictions of relevant API providers.
+3. **Data Protection**: Data obtained using this tool should comply with relevant data protection regulations.
+4. **Commercial Use**: For commercial use, please first obtain authorization from the relevant API providers.
+
+### Legal Notice
+
+The APIs and services used in this tool are owned by their respective owners. This tool has no affiliation with these service providers. All trademarks and service marks are the property of their respective owners.
+
+By using this tool, you acknowledge that you have read and agree to the above disclaimer and usage restrictions. If you do not agree, please stop using this tool immediately.
+
+## License
+
+MIT
+
+---
+
 # IPLocate API 位置查询工具
+
+<p align="right">
+  <b>中文</b> | <a href="#iplocate-api-location-query-tool">English</a>
+</p>
 
 这是一个基于 API 的位置查询命令行工具，可以通过 IP 地址或经纬度查询位置信息。
 
@@ -6,6 +239,7 @@
 
 - 通过 IP 地址查询基本位置信息
 - 通过经纬度查询详细位置信息
+- 支持多个IP地址查询（空格分隔）
 
 ## 安装
 
@@ -33,11 +267,19 @@ make uninstall-local
 go install github.com/hsn0918/iplocate/cmd/iplocate@latest
 ```
 
+## 使用方法
+
 ### IP 查询
 
 ```bash
 # 查询指定 IP 的位置信息
 ./iplocate ip -a 114.114.114.114
+
+# 查询多个IP地址
+./iplocate ip -a "114.114.114.114 8.8.8.8"
+
+# 或者直接在命令后面指定IP
+./iplocate ip 114.114.114.114 8.8.8.8
 
 # 启用调试模式
 ./iplocate ip -a 114.114.114.114 -d
@@ -67,6 +309,12 @@ go install github.com/hsn0918/iplocate/cmd/iplocate@latest
 ```bash
 # 先通过 IP 查询位置，再通过经纬度查询详细信息
 ./iplocate full -a 114.114.114.114
+
+# 查询多个IP地址
+./iplocate full -a "114.114.114.114 8.8.8.8"
+
+# 或者直接在命令后面指定IP
+./iplocate full 114.114.114.114 8.8.8.8
 
 # 启用调试模式
 ./iplocate full -a 114.114.114.114 -d
@@ -160,6 +408,22 @@ go test -tags=integration ./pkg/...
 # 或者使用 Makefile
 make test
 ```
+
+### 发布
+
+发布新版本：
+
+```bash
+# 发布新版本
+make release v=1.0.1
+```
+
+这将：
+1. 更新 Makefile 中的版本号
+2. 提交更改
+3. 创建标签
+4. 推送到远程仓库
+5. GitHub Actions 将自动构建并发布 release
 
 ## 依赖库
 
