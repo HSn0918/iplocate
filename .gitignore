@@ -50,6 +50,8 @@
 *.yml
 !*.example.yaml
 !*.example.yml
+!.github/workflows/*.yml
+!.goreleaser.yml
 
 # 其他
 .history/

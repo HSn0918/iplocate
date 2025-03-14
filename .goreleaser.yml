@@ -1,0 +1,70 @@
+project_name: iplocate
+
+before:
+  hooks:
+    - go mod tidy
+    - go generate ./...
+    - go build -o iplocate ./cmd/iplocate/main.go
+    - ./iplocate completion bash > iplocate_completion.bash
+    - ./iplocate completion zsh > iplocate_completion.zsh
+
+builds:
+  - main: ./cmd/iplocate/main.go
+    id: "iplocate"
+    binary: iplocate
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X github.com/hsn0918/iplocate/cmd/iplocate/cmd.Version={{.Version}}
+      - -X github.com/hsn0918/iplocate/cmd/iplocate/cmd.BuildDate={{.Date}}
+      - -X github.com/hsn0918/iplocate/cmd/iplocate/cmd.GitCommit={{.Commit}}
+
+archives:
+  - format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - README.md
+      - LICENSE
+      - iplocate_completion.bash
+      - iplocate_completion.zsh
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^ci:'
+      - '^chore:'
+      - Merge pull request
+      - Merge branch
+
+release:
+  github:
+    owner: hsn0918
+    name: iplocate
+  prerelease: auto
+  draft: false
