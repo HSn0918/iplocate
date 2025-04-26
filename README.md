@@ -11,6 +11,7 @@ A command-line tool based on API for querying location information through IP ad
 - Query basic location information by IP address
 - Query detailed location information by latitude and longitude coordinates
 - Support for multiple IP addresses (space-separated)
+- MCP (Model Context Protocol) support for integration with LLM applications
 
 ## Installation
 
@@ -94,6 +95,54 @@ go install github.com/hsn0918/iplocate/cmd/iplocate@latest
 ./iplocate full -a 114.114.114.114 -r
 ```
 
+### MCP Service
+
+IPLocate now supports the Model Context Protocol (MCP), which allows it to be used as a tool by LLM applications:
+
+```bash
+# Start the IPLocate MCP service
+./iplocate mcp
+
+# Run with debug mode
+./iplocate mcp -d
+
+# Save logs to a file
+./iplocate mcp -l mcp_service.log
+```
+
+#### MCP Tools
+
+The MCP service provides the following tools:
+
+1. **ip_location** - Query location by IP address
+   - Parameter: `ip` (string) - The IP address to query
+
+2. **latlng_location** - Query location by latitude and longitude
+   - Parameter: `lat` (number) - Latitude value
+   - Parameter: `lng` (number) - Longitude value
+
+#### Integrating with LLM Applications
+
+To integrate IPLocate into LLM applications, add it to your MCP configuration:
+
+```json
+{
+  "iplocate-mcp": {
+    "isActive": true,
+    "name": "iplocate-mcp",
+    "type": "stdio",
+    "description": "IP address and coordinates location service, provides global IP location and coordinates address lookup",
+    "command": "./iplocate-mcp",
+    "args": [
+      "mcp"
+    ],
+    "env": {}
+  }
+}
+```
+
+See the `scripts/mcp_config.json` for a complete configuration example and `scripts/mcp_test.js` for a simple client example.
+
 ### Auto-completion
 
 The tool supports generating auto-completion scripts for Bash, Zsh, Fish, and PowerShell:
@@ -144,6 +193,9 @@ latlng:
 full:
   -a, --addr string   IP address to query (required)
   -r, --raw           Show raw response information
+
+mcp:
+  (Uses global options)
 ```
 
 ## Development
@@ -178,6 +230,9 @@ go test -tags=integration ./pkg/...
 
 # Or use Makefile
 make test
+
+# Test MCP functionality
+node scripts/mcp_test.js
 ```
 
 ## Dependencies
@@ -185,6 +240,7 @@ make test
 - [github.com/spf13/cobra](https://github.com/spf13/cobra) - Command-line interface library
 - [github.com/go-resty/resty](https://github.com/go-resty/resty) - Simple HTTP and REST client library
 - [github.com/sirupsen/logrus](https://github.com/sirupsen/logrus) - Structured logging library
+- [github.com/mark3labs/mcp-go](https://github.com/mark3labs/mcp-go) - Model Context Protocol implementation for Go
 
 ## Disclaimer and Usage Restrictions
 
@@ -224,6 +280,7 @@ MIT
 - 通过 IP 地址查询基本位置信息
 - 通过经纬度查询详细位置信息
 - 支持多个IP地址查询（空格分隔）
+- 支持 MCP（Model Context Protocol）协议，可集成到 LLM 应用中
 
 ## 安装
 
@@ -306,6 +363,54 @@ go install github.com/hsn0918/iplocate/cmd/iplocate@latest
 # 显示原始响应数据
 ./iplocate full -a 114.114.114.114 -r
 ```
+
+### MCP 服务
+
+IPLocate 现在支持模型上下文协议（MCP），可以作为 LLM 应用的工具使用：
+
+```bash
+# 启动 IPLocate MCP 服务
+./iplocate mcp
+
+# 使用调试模式运行
+./iplocate mcp -d
+
+# 将日志保存到文件
+./iplocate mcp -l mcp_service.log
+```
+
+#### MCP 工具
+
+MCP 服务提供以下工具：
+
+1. **ip_location** - 通过 IP 地址查询位置
+   - 参数：`ip`（字符串）- 要查询的 IP 地址
+
+2. **latlng_location** - 通过经纬度查询位置
+   - 参数：`lat`（数字）- 纬度值
+   - 参数：`lng`（数字）- 经度值
+
+#### 与 LLM 应用集成
+
+要将 IPLocate 集成到 LLM 应用中，请将其添加到您的 MCP 配置中：
+
+```json
+{
+  "iplocate-mcp": {
+    "isActive": true,
+    "name": "iplocate-mcp",
+    "type": "stdio",
+    "description": "IP地址和经纬度位置查询服务，提供全球IP地址位置信息查询和经纬度详细地址查询功能",
+    "command": "./iplocate-mcp",
+    "args": [
+      "mcp"
+    ],
+    "env": {}
+  }
+}
+```
+
+完整配置示例请参阅 `scripts/mcp_config.json`，客户端示例请查看 `scripts/mcp_test.js`。
 
 ### 自动补全
 
@@ -391,6 +496,7 @@ go test -tags=integration ./pkg/...
 
 # 或者使用 Makefile
 make test
+
 ```
 
 
@@ -399,6 +505,7 @@ make test
 - [github.com/spf13/cobra](https://github.com/spf13/cobra) - 命令行界面库
 - [github.com/go-resty/resty](https://github.com/go-resty/resty) - 简单的 HTTP 和 REST 客户端库
 - [github.com/sirupsen/logrus](https://github.com/sirupsen/logrus) - 结构化日志库
+- [github.com/mark3labs/mcp-go](https://github.com/mark3labs/mcp-go) - Model Context Protocol implementation for Go
 
 ## 免责声明与使用限制
 
