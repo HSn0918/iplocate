@@ -1,0 +1,38 @@
+{
+  "name": "@hsn0918/iplocate-mcp",
+  "version": "1.0.1",
+  "description": "IP地址和经纬度位置查询 MCP 服务",
+  "main": "index.js",
+  "bin": {
+    "iplocate-mcp": "index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "build": "./build.sh",
+    "prepublishOnly": "./build.sh"
+  },
+  "keywords": [
+    "ip",
+    "geolocation",
+    "mcp",
+    "llm"
+  ],
+  "author": "hsn0918",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hsn0918/iplocate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hsn0918/iplocate/issues"
+  },
+  "homepage": "https://github.com/hsn0918/iplocate#readme",
+  "files": [
+    "index.js",
+    "README.md",
+    "bin/*"
+  ]
+}

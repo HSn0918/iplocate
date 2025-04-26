@@ -1,0 +1,18 @@
+# 源代码和构建脚本
+build.sh
+
+# 开发文件
+.DS_Store
+.vscode/
+.idea/
+*.log
+npm-debug.log*
+
+# 不需要的临时文件
+*~
+*.swp
+*.bak
+.env
+
+# 仅保留所需的二进制文件
+# bin目录下的文件将会被包含在发布中

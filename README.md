@@ -110,6 +110,23 @@ IPLocate now supports the Model Context Protocol (MCP), which allows it to be us
 ./iplocate mcp -l mcp_service.log
 ```
 
+#### Using the NPM Package
+
+For easier integration with LLM applications, you can use our npm package:
+
+```bash
+# Install globally
+npm install -g @hsn0918/iplocate-mcp
+
+# Or use directly with npx
+npx @hsn0918/iplocate-mcp
+```
+
+The npm package includes pre-compiled binaries for:
+- Windows (x64)
+- macOS (Intel/Apple Silicon)
+- Linux (x64/ARM64)
+
 #### MCP Tools
 
 The MCP service provides the following tools:
@@ -127,21 +144,24 @@ To integrate IPLocate into LLM applications, add it to your MCP configuration:
 
 ```json
 {
-  "iplocate-mcp": {
-    "isActive": true,
-    "name": "iplocate-mcp",
-    "type": "stdio",
-    "description": "IP address and coordinates location service, provides global IP location and coordinates address lookup",
-    "command": "./iplocate-mcp",
-    "args": [
-      "mcp"
-    ],
-    "env": {}
+  "mcpServers": {
+    "iplocate-mcp": {
+      "isActive": true,
+      "name": "iplocate-mcp",
+      "type": "stdio",
+      "description": "IP地址和经纬度位置查询服务，提供全球IP地址位置信息查询和经纬度详细地址查询功能",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@hsn0918/iplocate-mcp@1.0.1"
+      ],
+      "env": {}
+    }
   }
 }
 ```
 
-See the `scripts/mcp_config.json` for a complete configuration example and `scripts/mcp_test.js` for a simple client example.
+This configuration uses the npm package, which makes it easy to deploy in any environment without needing to install Go or compile the source code.
 
 ### Auto-completion
 
@@ -213,6 +233,11 @@ iplocate/
 │   ├── models/         # Data models
 │   └── utils/          # Utility functions
 ├── scripts/            # Script files
+│   ├── mcp_config.json # MCP configuration example
+├── npm-package/        # NPM package for MCP service
+│   ├── index.js        # NPM package entry point
+│   ├── package.json    # NPM package definition
+│   └── bin/            # Precompiled binaries
 ├── go.mod              # Go module definition
 ├── go.sum              # Go module checksums
 ├── Makefile            # Build scripts
@@ -232,7 +257,7 @@ go test -tags=integration ./pkg/...
 make test
 
 # Test MCP functionality
-node scripts/mcp_test.js
+npx @hsn0918/iplocate-mcp
 ```
 
 ## Dependencies
@@ -308,62 +333,6 @@ make uninstall-local
 go install github.com/hsn0918/iplocate/cmd/iplocate@latest
 ```
 
-## 使用方法
-
-### IP 查询
-
-```bash
-# 查询指定 IP 的位置信息
-./iplocate ip -a 114.114.114.114
-
-# 查询多个IP地址
-./iplocate ip -a "114.114.114.114 8.8.8.8"
-
-# 或者直接在命令后面指定IP
-./iplocate ip 114.114.114.114 8.8.8.8
-
-# 启用调试模式
-./iplocate ip -a 114.114.114.114 -d
-
-# 显示原始响应数据
-./iplocate ip -a 114.114.114.114 -r
-
-# 将日志输出到文件
-./iplocate ip -a 114.114.114.114 -l ip_query.log
-```
-
-### 经纬度查询
-
-```bash
-# 查询指定经纬度的位置信息
-./iplocate latlng -t 39.9042 -g 116.4074
-
-# 启用调试模式
-./iplocate latlng -t 39.9042 -g 116.4074 -d
-
-# 显示原始响应数据
-./iplocate latlng -t 39.9042 -g 116.4074 -r
-```
-
-### 完整查询
-
-```bash
-# 先通过 IP 查询位置，再通过经纬度查询详细信息
-./iplocate full -a 114.114.114.114
-
-# 查询多个IP地址
-./iplocate full -a "114.114.114.114 8.8.8.8"
-
-# 或者直接在命令后面指定IP
-./iplocate full 114.114.114.114 8.8.8.8
-
-# 启用调试模式
-./iplocate full -a 114.114.114.114 -d
-
-# 显示原始响应数据
-./iplocate full -a 114.114.114.114 -r
-```
-
 ### MCP 服务
 
 IPLocate 现在支持模型上下文协议（MCP），可以作为 LLM 应用的工具使用：
@@ -378,6 +347,23 @@ IPLocate 现在支持模型上下文协议（MCP），可以作为 LLM 应用的
 # 将日志保存到文件
 ./iplocate mcp -l mcp_service.log
 ```
+
+#### 使用 NPM 包
+
+为了更容易与 LLM 应用集成，您可以使用我们的 npm 包：
+
+```bash
+# 全局安装
+npm install -g @hsn0918/iplocate-mcp
+
+# 或者直接使用 npx 运行
+npx @hsn0918/iplocate-mcp
+```
+
+npm 包包含以下预编译的二进制文件：
+- Windows (x64)
+- macOS (Intel/Apple Silicon)
+- Linux (x64/ARM64)
 
 #### MCP 工具
 
@@ -396,25 +382,28 @@ MCP 服务提供以下工具：
 
 ```json
 {
-  "iplocate-mcp": {
-    "isActive": true,
-    "name": "iplocate-mcp",
-    "type": "stdio",
-    "description": "IP地址和经纬度位置查询服务，提供全球IP地址位置信息查询和经纬度详细地址查询功能",
-    "command": "./iplocate-mcp",
-    "args": [
-      "mcp"
-    ],
-    "env": {}
+  "mcpServers": {
+    "iplocate-mcp": {
+      "isActive": true,
+      "name": "iplocate-mcp",
+      "type": "stdio",
+      "description": "IP地址和经纬度位置查询服务，提供全球IP地址位置信息查询和经纬度详细地址查询功能",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@hsn0918/iplocate-mcp@1.0.1"
+      ],
+      "env": {}
+    }
   }
 }
 ```
 
-完整配置示例请参阅 `scripts/mcp_config.json`，客户端示例请查看 `scripts/mcp_test.js`。
+这个配置使用 npm 包，使得在任何环境中部署都很容易，无需安装 Go 或编译源代码。
 
 ### 自动补全
 
-工具支持为 Bash、Zsh、Fish 和 PowerShell 生成自动补全脚本：
+该工具支持为 Bash、Zsh、Fish 和 PowerShell 生成自动补全脚本：
 
 ```bash
 # 生成 Bash 自动补全脚本并应用
@@ -497,8 +486,9 @@ go test -tags=integration ./pkg/...
 # 或者使用 Makefile
 make test
 
+# Test MCP functionality
+npx @hsn0918/iplocate-mcp
 ```
-
 
 ## 依赖库
 
